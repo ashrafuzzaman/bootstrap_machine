@@ -1,0 +1,16 @@
+{
+    "run_list": [ "recipe[mysql::server]", "recipe[mysql::client]", 
+            "recipe[mysql::ruby]", "recipe[mongodb::10gen_repo]", "recipe[mongo-setup]",
+            "recipe[postgresql::server]" ],
+
+    "mysql": {  "server_root_password": "",
+                "server_repl_password": "",
+                "server_debian_password": "",
+                "bind_address": "0.0.0.0"},
+    "postgresql": {
+      "password": {"postgres": "postgres"}},
+
+    "java": {"jdk_version": "6",
+              "install_flavor": "oracle",
+              "oracle": {"accept_oracle_download_terms": "true"} }
+}
