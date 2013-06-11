@@ -19,12 +19,11 @@ else
   echo -e "\e[32mChef already installed\e[00m"
 fi
 
-
 echo -e "\e[33mCloning recipies\e[00m"
 sudo mkdir -p /var/chef/cookbooks
 cd /var/chef/cookbooks
 
-books=(mysql openssl build-essential runit ohai apt yum mongodb postgresql)
+books=(mysql openssl build-essential runit ohai apt yum mongodb postgresql java windows chef_handler)
 for book in "${books[@]}"
 do
   if [ ! -d $book ]; then
@@ -33,6 +32,11 @@ do
     echo -e "\e[32m$book already installed\e[00m"
   fi
 done
+
+if [ ! -d rvm ]; then
+sudo curl -Ls https://github.com/fnichol/chef-rvm/tarball/v0.9.0 | sudo tar xfz - && \
+  sudo mv fnichol-chef-rvm-* rvm
+fi
 # sudo rm -rf /etc/chef/ohai_plugins/README
 
 cd $BASEDIR && sudo chef-solo -c solo.rb -j node.json
