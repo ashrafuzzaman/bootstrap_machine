@@ -1,33 +1,38 @@
 #!/bin/bash
 
-sudo apt-get -y install aptitude git tar
-# Install Ruby and Chef
+# Store the base dir
+BASEDIR=$( cd $(dirname $0); pwd)
 
+# sudo apt-get update && sudo apt-get dist-upgrade
+sudo apt-get -y install aptitude git tar
 if ! type ruby > /dev/null; then
-  echo -e "\e[32m Installing ruby"
+  echo -e "\e[32m Installing ruby\e[00m"
   sudo aptitude install -y ruby1.9.3 ruby1.9.3-dev make
 else
-  echo -e "\e[32mRuby already installed"
+  echo -e "\e[32mRuby already installed\e[00m"
 fi
-echo -e '\e[00m'
 
 if ! type chef-solo > /dev/null; then
-  echo -e "\e[32mInstalling chef..."
+  echo -e "\e[32mInstalling chef...\e[00m"
   sudo gem install --no-rdoc --no-ri chef
 else
-  echo -e "\e[32mChef already installed"
+  echo -e "\e[32mChef already installed\e[00m"
 fi
 
-echo -e "\e[33mCloning recipies"
-cd site-cookbooks
-books=(mysql openssl build-essential runit ohai apt yum mongodb)
+
+echo -e "\e[33mCloning recipies\e[00m"
+sudo mkdir -p /var/chef/cookbooks
+cd /var/chef/cookbooks
+
+books=(mysql openssl build-essential runit ohai apt yum mongodb postgresql)
 for book in "${books[@]}"
 do
   if [ ! -d $book ]; then
-    knife cookbook site download $book && tar -xvf $book-*.tar.gz && rm $book-*.tar.gz
+    sudo knife cookbook site download $book && sudo tar -xvf $book-*.tar.gz && sudo rm $book-*.tar.gz
   else
-    echo -e "\e[32m$book already installed"
+    echo -e "\e[32m$book already installed\e[00m"
   fi
 done
-echo -e '\e[00m'
 # sudo rm -rf /etc/chef/ohai_plugins/README
+
+cd $BASEDIR && sudo chef-solo -c solo.rb -j node.json
