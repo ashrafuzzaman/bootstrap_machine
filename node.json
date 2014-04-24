@@ -1,22 +1,36 @@
 {
-    "run_list1": [ "recipe[apt]", "recipe[mysql::server]", "recipe[mysql::client]", 
-            "recipe[mysql::ruby]", "recipe[mongodb::10gen_repo]", "recipe[mongo-setup]",
-            "recipe[postgresql::server]", "recipe[java]", "recipe[rvm::system]", 
-            "recipe[env-setup]", "recipe[sublime-text]" ],
+    "run_list": [ "recipe[apt]", "recipe[mysql::server]", "recipe[mysql::client]",
+        "recipe[postgresql::server]", "recipe[java]", "recipe[git]", "recipe[rvm::system]",
+        "recipe[env-setup]", "recipe[sublime-text]" ],
 
-    "run_list": [ "recipe[env-setup]", "recipe[sublime-text]" ],
-
-    "mysql": {  "server_root_password": "",
-                "server_repl_password": "",
-                "server_debian_password": "",
-                "bind_address": "0.0.0.0"},
+    "mysql": {
+        "server_root_password": "",
+        "server_repl_password": "",
+        "server_debian_password": "",
+        "bind_address": "0.0.0.0"
+    },
     "postgresql": {
-      "password": {"postgres": "postgres"}},
+        "password": {
+            "postgres": "postgres"
+        }
+    },
 
-    "java": {"jdk_version": "6",
-              "install_flavor": "oracle",
-              "oracle": {"accept_oracle_download_terms": "true"} },
+    "java": {
+        "jdk_version": "7",
+        "install_flavor": "oracle",
+        "oracle": {
+            "accept_oracle_download_terms": "true"
+        }
+    },
 
-    "rvm": {"user_installs": {"rubies": ["1.9.3"]}},
-    "git": {"user_name": "A.K.M. Ashrafuzzaman", "email": "ashrafuzzaman.g2@gmail.com"}
+    "rvm": {
+        "user_installs": {
+            "rubies": ["2.1.0"]
+        }
+    },
+
+    "git": {
+        "user_name": "A.K.M. Ashrafuzzaman",
+        "email": "ashrafuzzaman.g2@gmail.com"
+    }
 }
