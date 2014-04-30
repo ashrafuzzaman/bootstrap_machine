@@ -8,3 +8,7 @@ end
 execute "git config email" do
   command "git config --global user.email \"#{node[:git][:email]}\""
 end
+
+execute "git diff ui color" do
+  command "git config --global color.ui auto"
+end
